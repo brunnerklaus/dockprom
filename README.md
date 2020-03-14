@@ -39,7 +39,7 @@ docker-compose up -d
 ## Setup unify-poller
 
 Add a user to the UniFi Controller follow this [guideline](https://github.com/unifi-poller/unifi-poller/wiki/Installation).</br>
-Set correct host, password and user in `.env` to pol metrics from [unify-controller](https://github.com/brunnerklaus/docker-unifi-rpi)
+Set correct host, password and user in `.env` to poll metrics from [unify-controller](https://github.com/brunnerklaus/docker-unifi-rpi)
 
 ```yml
 #influxdb
