@@ -4,8 +4,6 @@ dockprom
 A monitoring solution for Docker hosts and containers with [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor),
 [NodeExporter](https://github.com/prometheus/node_exporter) and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
 
-***If you're looking for the Docker Swarm version please go to [stefanprodan/swarmprom](https://github.com/stefanprodan/swarmprom)***
-
 ## Install
 
 Clone this repository on your Docker host, cd into dockprom directory and run compose up:
@@ -15,17 +13,17 @@ git clone https://github.com/brunnerklaus/dockprom
 cd dockprom
 ```
 
-Set in .env file admin,password and hostname settings first!
+Set in `.env## file admin, password and hostname first!
 ```bash
 docker-compose up -d
 ```
 
-Prerequisites:
+## Prerequisites:
 
 * Docker Engine >= 1.13
 * Docker Compose >= 1.11
 
-Containers:
+## Containers:
 
 * Prometheus (metrics database) `http://<host-ip>:9090`
 * Prometheus-Pushgateway (push acceptor for ephemeral and batch jobs) `http://<host-ip>:9091`
@@ -40,8 +38,8 @@ Containers:
 
 ## Setup unify-poller
 
-Add a user to the UniFi Controller https://github.com/unifi-poller/unifi-poller/wiki/Installation</br>
-Set correct host, password and user in `.env`
+Add a user to the UniFi Controller follow this [guideline](https://github.com/unifi-poller/unifi-poller/wiki/Installation).</br>
+Set correct host, password and user in `.env` to pol metrics from [unify-controller](https://github.com/brunnerklaus/docker-unifi-rpi)
 
 ```yml
 #influxdb
