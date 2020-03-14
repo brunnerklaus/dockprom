@@ -13,10 +13,15 @@ rule_files:
 
 # A scrape configuration containing exactly one endpoint to scrape.
 scrape_configs:
-  - job_name: 'nodeexporter'
+  - job_name: 'pihole-exporter'
     scrape_interval: 5s
     static_configs:
-      - targets: ['nodeexporter:9100']
+      - targets: ['pihole-exporter:9617']
+
+  - job_name: 'pihole'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['pihole:9100']
 
   - job_name: 'cadvisor'
     scrape_interval: 5s
@@ -28,26 +33,14 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'pushgateway'
-    scrape_interval: 10s
-    honor_labels: true
-    static_configs:
-      - targets: ['pushgateway:9091']
-
+  # - job_name: 'cloudflared'
+  #   scrape_interval: 10s
+  #   static_configs:
+  #     - targets: ['cloudflared:49312']
 
 alerting:
   alertmanagers:
   - scheme: http
     static_configs:
-    - targets: 
+    - targets:
       - 'alertmanager:9093'
-
-#  - job_name: 'nginx'
-#    scrape_interval: 10s
-#    static_configs:
-#      - targets: ['nginxexporter:9113']
-
-#  - job_name: 'aspnetcore'
-#    scrape_interval: 10s
-#    static_configs:
-#      - targets: ['eventlog-proxy:5000', 'eventlog:5000']

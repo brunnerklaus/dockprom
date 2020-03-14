@@ -11,10 +11,13 @@ A monitoring solution for Docker hosts and containers with [Prometheus](https://
 Clone this repository on your Docker host, cd into dockprom directory and run compose up:
 
 ```bash
-git clone https://github.com/stefanprodan/dockprom
+git clone https://github.com/brunnerklaus/dockprom
 cd dockprom
+```
 
-ADMIN_USER=admin ADMIN_PASSWORD=admin docker-compose up -d
+Set in .env file admin,password and hostname settings first!
+```bash
+docker-compose up -d
 ```
 
 Prerequisites:
@@ -31,6 +34,29 @@ Containers:
 * NodeExporter (host metrics collector)
 * cAdvisor (containers metrics collector)
 * Caddy (reverse proxy and basic auth provider for prometheus and alertmanager)
+* Pihole-exporter (pihole metrics collector) `https://github.com/eko/pihole-exporter`
+* Unifi-poller (collect UniFi controller data) `https://github.com/unifi-poller/unifi-poller`
+
+
+## Setup unify-poller
+
+Add a user to the UniFi Controller https://github.com/unifi-poller/unifi-poller/wiki/Installation</br>
+Set correct host, password and user in `.env`
+
+```yml
+#influxdb
+INFLUXDB_HTTP_AUTH_ENABLED=true
+INFLUXDB_ADMIN_USER=unifipoller
+INFLUXDB_ADMIN_PASSWORD=changeme
+INFLUXDB_DB=unifi
+
+#unifi-poller
+POLLER_TAG=latest
+POLLER_DEBUG=false
+UNIFI_USER=unifipoller
+UNIFI_PASS=changeme
+UNIFI_URL=https://example.com:8443
+```
 
 ## Setup Grafana
 
