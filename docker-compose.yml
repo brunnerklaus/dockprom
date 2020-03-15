@@ -193,6 +193,21 @@ services:
       - monitor-net
     restart: always
 
+  # This services probes things using HTTP, ICMP, TCP etc. Mainly used to do connectivity and service checks
+  blackbox_exporter:
+    image: prom/blackbox-exporter:master
+    container_name: blackbox-exporter
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./blackbox/blackbox_config.yml:/etc/blackbox_exporter/config.yml
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
+    restart: always
+
+
 #  pushgateway:
 #    image: prom/pushgateway:latest
 #    container_name: pushgateway

@@ -38,6 +38,39 @@ scrape_configs:
   #   static_configs:
   #     - targets: ['cloudflared:49312']
 
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+          - http://prometheus.io    # Target to probe with http.
+          - https://prometheus.io   # Target to probe with https.
+          - https://www.youtube.com
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 192.168.1.4:9115  # The blackbox exporter's real hostname:port.
+
+  - job_name: 'blackbox_ping'
+    metrics_path: /probe
+    params:
+      module: [icmp]
+    static_configs:
+      - targets:
+          - www.google.com
+          - 1.1.1.1
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 192.168.1.4:9115  # The blackbox exporter's real hostname:port.
+
 alerting:
   alertmanagers:
   - scheme: http
