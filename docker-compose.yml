@@ -200,7 +200,7 @@ services:
     ports:
       - "9115:9115"
     volumes:
-      - ./blackbox/blackbox_config.yml:/etc/blackbox_exporter/config.yml
+      - ./blackbox/blackbox_config.yml:/etc/blackbox-exporter/config.yml
     networks:
       - monitor-net
     labels:
