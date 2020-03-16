@@ -9,6 +9,7 @@ volumes:
   grafana_data: {}
   influxdb-storage: {}
   chronograf-storage: {}
+  influxdb-storage: {}
 
 services:
   prometheus:
@@ -165,40 +166,25 @@ services:
       - monitor-net
     restart: always
 
-  chronograf:
-    image: chronograf:latest
-    container_name: chronograf
-    restart: always
-    ports:
-      - '127.0.0.1:8888:8888'
-    volumes:
-      - chronograf-storage:/var/lib/chronograf
-    depends_on:
-      - influxdb
+  unifi-poller:
+    image: golift/unifi-poller:${POLLER_TAG}
+    container_name: unifi-poller
+    environment:
+      - UP_PROMETHEUS_DISABLE=false
+      - UP_PROMETHEUS_NAMESPACE=unifipoller
+      - UP_PROMETHEUS_HTTP_LISTEN=0.0.0.0:9130
+      - UP_PROMETHEUS_REPORT_ERRORS=false
+      - UP_PROMETHEUS_BUFFER=50
+      - UP_INFLUXDB_DISABLE=true
+      - UP_UNIFI_DEFAULT_USER=${UNIFI_USER}
+      - UP_UNIFI_DEFAULT_PASS=${UNIFI_PASS}
+      - UP_UNIFI_DEFAULT_URL=${UNIFI_URL}
+      - UP_POLLER_DEBUG=${POLLER_DEBUG}
+    expose:
+      - 9130
     networks:
       - monitor-net
-    environment:
-      - INFLUXDB_URL=http://influxdb:8086
-      - INFLUXDB_USERNAME=${INFLUXDB_ADMIN_USER}
-      - INFLUXDB_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
-      - INFLUXDB_REPORTING_DISABLED=true
     restart: always
-
-  # unifi-poller:
-  #   image: golift/unifi-poller:${POLLER_TAG}
-  #   container_name: unifi-poller
-  #   environment:
-  #     - UP_INFLUXDB_DB=${INFLUXDB_DB}
-  #     - UP_INFLUXDB_USER=${INFLUXDB_ADMIN_USER}
-  #     - UP_INFLUXDB_PASS=${INFLUXDB_ADMIN_PASSWORD}
-  #     - UP_INFLUXDB_URL=http://influxdb:8086
-  #     - UP_UNIFI_DEFAULT_USER=${UNIFI_USER}
-  #     - UP_UNIFI_DEFAULT_PASS=${UNIFI_PASS}
-  #     - UP_UNIFI_DEFAULT_URL=${UNIFI_URL}
-  #     - UP_POLLER_DEBUG=${POLLER_DEBUG}
-  #   networks:
-  #     - monitor-net
-  #   restart: always
 
   # # This services probes things using HTTP, ICMP, TCP etc. Mainly used to do connectivity and service checks
   # blackbox_exporter:

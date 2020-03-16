@@ -14,8 +14,14 @@ git clone https://github.com/brunnerklaus/dockprom
 cd dockprom
 ```
 
-Set in `.env` file admin, password and hostname first!
+Copy `env.example` to `.env` file  and update credentials first!
 ```bash
+cp .env.example .enc
+```
+
+Run containers with `docker-compose`
+```bash
+docker-compose build
 docker-compose up -d
 ```
 
@@ -44,12 +50,6 @@ Add a user to the UniFi Controller follow this [guideline](https://github.com/un
 Set correct host, password and user in `.env` to poll metrics from [unify-controller](https://github.com/brunnerklaus/docker-unifi-rpi)
 
 ```yml
-#influxdb
-INFLUXDB_HTTP_AUTH_ENABLED=true
-INFLUXDB_ADMIN_USER=unifipoller
-INFLUXDB_ADMIN_PASSWORD=changeme
-INFLUXDB_DB=unifi
-
 #unifi-poller
 POLLER_TAG=latest
 POLLER_DEBUG=false
