@@ -1,7 +1,10 @@
 modules:
   http_2xx:
     prober: http
+    timeout: 5s
     http:
+      valid_http_versions: ["HTTP/1.1", "HTTP/2"]
+      valid_status_codes: []  # Defaults to 2xx
       preferred_ip_protocol: "ip4" # defaults to "ip6"
       ip_protocol_fallback: false  # no fallback to "ip6"
   http_post_2xx:
@@ -21,3 +24,57 @@ modules:
     icmp:
       preferred_ip_protocol: "ip4" # defaults to "ip6"
       ip_protocol_fallback: false  # no fallback to "ip6"
+  smtp_starttls:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      query_response:
+        - expect: "^220 ([^ ]+) ESMTP (.+)$"
+        - send: "EHLO prober"
+        - expect: "^250-STARTTLS"
+        - send: "STARTTLS"
+        - expect: "^220"
+        - starttls: true
+        - send: "EHLO prober"
+        - expect: "^250-AUTH"
+        - send: "QUIT"
+  dns_udp:
+    prober: dns
+    timeout: 5s
+    dns:
+      query_name: "www.prometheus.io"
+      query_type: "A"
+      valid_rcodes:
+      - NOERROR
+      validate_answer_rrs:
+        fail_if_matches_regexp:
+        - ".*127.0.0.1"
+        fail_if_all_match_regexp:
+        - ".*127.0.0.1"
+        fail_if_not_matches_regexp:
+        - "www.prometheus.io.\t300\tIN\tA\t127.0.0.1"
+        fail_if_none_matches_regexp:
+        - "127.0.0.1"
+      validate_authority_rrs:
+        fail_if_matches_regexp:
+        - ".*127.0.0.1"
+      validate_additional_rrs:
+        fail_if_matches_regexp:
+        - ".*127.0.0.1"
+  dns_soa:
+    prober: dns
+    dns:
+      query_name: "prometheus.io"
+      query_type: "SOA"
+  dns_tcp_example:
+    prober: dns
+    dns:
+      transport_protocol: "tcp" # defaults to "udp"
+      preferred_ip_protocol: "ip4" # defaults to "ip6"
+      query_name: "www.prometheus.io"
+  ssh_banner:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      query_response:
+      - expect: "^SSH-2.0-"

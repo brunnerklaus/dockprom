@@ -2,7 +2,8 @@ dockprom
 ========
 
 A monitoring solution for Docker hosts and containers with [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor),
-[NodeExporter](https://github.com/prometheus/node_exporter) and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
+[NodeExporter](https://github.com/prometheus/node_exporter), [BlackboxExporter](https://github.com/prometheus/blackbox_exporter) and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
+
 
 ## Install
 
@@ -13,7 +14,7 @@ git clone https://github.com/brunnerklaus/dockprom
 cd dockprom
 ```
 
-Set in `.env## file admin, password and hostname first!
+Set in `.env` file admin, password and hostname first!
 ```bash
 docker-compose up -d
 ```
@@ -25,15 +26,16 @@ docker-compose up -d
 
 ## Containers:
 
-* Prometheus (metrics database) `http://<host-ip>:9090`
-* Prometheus-Pushgateway (push acceptor for ephemeral and batch jobs) `http://<host-ip>:9091`
-* AlertManager (alerts management) `http://<host-ip>:9093`
-* Grafana (visualize metrics) `http://<host-ip>:3000`
-* NodeExporter (host metrics collector)
-* cAdvisor (containers metrics collector)
-* Caddy (reverse proxy and basic auth provider for prometheus and alertmanager)
-* Pihole-exporter (pihole metrics collector) `https://github.com/eko/pihole-exporter`
-* Unifi-poller (collect UniFi controller data) `https://github.com/unifi-poller/unifi-poller`
+- **Prometheus** (metrics database) `http://<host-ip>:9090`
+- **Prometheus-Pushgateway** (push acceptor for ephemeral and batch jobs) `http://<host-ip>:9091`
+- **AlertManager** (alerts management) `http://<host-ip>:9093`
+- **Grafana** (visualize metrics) `http://<host-ip>:3000`
+- **NodeExporter** (host metrics collector) `http://<host-ip>:9100`
+- **cAdvisor** (containers metrics collector) `http://<host-ip>:8080`
+- **Caddy** (reverse proxy and basic auth provider for prometheus and alertmanager)
+- **PiholeExporter** (pihole metrics collector) `https://github.com/eko/pihole-exporter` `http://<host-ip>:9617`
+- **UnifiPoller** (collect UniFi controller data) `https://github.com/unifi-poller/unifi-poller`
+- **BlackboxExporter** (allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP) `http://<host-ip>:9115`
 
 
 ## Setup unify-poller
