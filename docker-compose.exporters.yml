@@ -2,9 +2,9 @@ version: '2.1'
 
 services:
 
-  nodeexporter:
-    image: prom/node-exporter:v0.18.1
-    container_name: nodeexporter
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -15,22 +15,34 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - 9100:9100
+    expose:
+      - 9100
+    networks:
+      - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+    restart: always
 
   cadvisor:
-    image: gcr.io/google-containers/cadvisor:v0.34.0
+    image: google/cadvisor:latest
     container_name: cadvisor
+    environment:
+      - VIRTUAL_HOST=cadvisor.local
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /cgroup:/cgroup:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - '8080:8080'
+    expose:
+      - 8080
+    networks:
+      - monitor-net
     labels:
       org.label-schema.group: "monitoring"
-  
-
+    restart: always

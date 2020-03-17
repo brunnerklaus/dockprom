@@ -166,6 +166,8 @@ services:
       - 9130
     networks:
       - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
     restart: always
 
   # # This services probes things using HTTP, ICMP, TCP etc. Mainly used to do connectivity and service checks
