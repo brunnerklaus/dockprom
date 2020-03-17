@@ -1,6 +1,8 @@
 dockprom
 ========
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A monitoring solution for Docker hosts and containers with [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor),
 [NodeExporter](https://github.com/prometheus/node_exporter), [BlackboxExporter](https://github.com/prometheus/blackbox_exporter) and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
 
@@ -16,7 +18,7 @@ cd dockprom
 
 Copy `env.example` to `.env` file  and update credentials first!
 ```bash
-cp .env.example .enc
+cp .env.example .env
 ```
 
 Run containers with `docker-compose`
@@ -60,20 +62,14 @@ UNIFI_URL=https://example.com:8443
 
 ## Setup Grafana
 
-Navigate to `http://<host-ip>:3000` and login with user ***admin*** password ***admin***. You can change the credentials in the compose file or by supplying the `ADMIN_USER` and `ADMIN_PASSWORD` environment variables on compose up. The config file can be added directly in grafana part like this
+Navigate to `http://<host-ip>:3000` and login with user ***admin*** password ***admin***. You can change the credentials in the compose file or by supplying the `GRAFANA_ADMIN_USER` and `GRAFANA_ADMIN_PASSWORD` environment variables on compose up via the `.env` file and should have this content
 ```
-grafana:
-  image: grafana/grafana:5.2.4
-  env_file:
-    - config
+#grafana
+GRAFANA_ADMIN_USER=admin
+GRAFANA_ADMIN_PASSWORD=changeme
+GRAFANA_USERS_ALLOW_SIGN_UP=false
+```
 
-```
-and the config file format should have this content
-```
-GF_SECURITY_ADMIN_USER=admin
-GF_SECURITY_ADMIN_PASSWORD=changeme
-GF_USERS_ALLOW_SIGN_UP=false
-```
 If you want to change the password, you have to remove this entry, otherwise the change will not take effect
 ```
 - grafana_data:/var/lib/grafana
