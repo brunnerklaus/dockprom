@@ -74,8 +74,6 @@ services:
     restart: unless-stopped
     ports:
       - 9100:9100
-    expose:
-      - 9100
     networks:
       - monitor-net
     labels:
@@ -122,9 +120,9 @@ services:
       - /dev/disk/:/dev/disk:ro
     restart: unless-stopped
     ports:
-      - '8888:8888'
+      - '8888:8080'
     expose:
-      - 8888
+      - 8080
     networks:
       - monitor-net
     labels:
