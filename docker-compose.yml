@@ -13,7 +13,7 @@ volumes:
 
 services:
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.16.0
     container_name: prometheus
     environment:
       - VIRTUAL_HOST=prometheus.local
@@ -39,7 +39,7 @@ services:
     restart: always
 
   alertmanager:
-    image: prom/alertmanager:latest
+    image: prom/alertmanager:v0.20.0
     container_name: alertmanager
     environment:
       - VIRTUAL_HOST=alertmanager.local
@@ -60,7 +60,7 @@ services:
     restart: always
 
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v0.18.1
     container_name: node-exporter
     volumes:
       - /proc:/host/proc:ro
@@ -121,6 +121,8 @@ services:
       - /var/lib/docker:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     restart: unless-stopped
+    ports:
+      - '8888:8888'
     expose:
       - 8888
     networks:

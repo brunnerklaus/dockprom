@@ -1,14 +1,14 @@
-# image for builer
-FROM arm32v7/golang as builder
+# image for builder
+FROM golang:alpine as builder
 
 ENV PIHOLE_EXPORTER_VERSION "0.0.8"
+
+RUN apk update && \
+    apk --no-cache add git alpine-sdk upx
 
 RUN git clone --branch ${PIHOLE_EXPORTER_VERSION} https://github.com/eko/pihole-exporter.git /go/src/github.com/eko/pihole-exporter
 
 WORKDIR /go/src/github.com/eko/pihole-exporter
-
-RUN apk update && \
-    apk --no-cache add git alpine-sdk upx
 
 RUN GO111MODULE=on go mod vendor
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=7 go build -ldflags '-s -w' -o binary ./
