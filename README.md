@@ -4,7 +4,7 @@ dockprom
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A monitoring solution for Docker hosts and containers with [Prometheus](https://prometheus.io/), [Grafana](http://grafana.org/), [cAdvisor](https://github.com/google/cadvisor),
-[NodeExporter](https://github.com/prometheus/node_exporter), [BlackboxExporter](https://github.com/prometheus/blackbox_exporter) and alerting with [AlertManager](https://github.com/prometheus/alertmanager).
+[NodeExporter](https://github.com/prometheus/node_exporter), [BlackboxExporter](https://github.com/prometheus/blackbox_exporter) and alerting with [AlertManager](https://github.com/prometheus/alertmanager) on a [Raspberry Pi](https://www.raspberrypi.org/).
 
 
 ## Install
@@ -23,7 +23,6 @@ cp .env.example .env
 
 Run containers with `docker-compose`
 ```bash
-docker-compose build
 docker-compose up -d
 ```
 
