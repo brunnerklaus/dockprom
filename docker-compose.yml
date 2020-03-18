@@ -103,8 +103,9 @@ services:
 
   cadvisor:
     build:
-     context: ./cadvisor
-     dockerfile: Dockerfile
+      context: ./cadvisor
+      dockerfile: Dockerfile
+    image: cadvisor:latest
     container_name: cadvisor
     environment:
       - VIRTUAL_HOST=cadvisor.local
