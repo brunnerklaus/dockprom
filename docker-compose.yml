@@ -83,7 +83,10 @@ services:
     restart: always
 
   pihole-exporter:
-    image: ekofr/pihole-exporter:latest
+    build:
+      context: ./pihole-exporter
+      dockerfile: Dockerfile
+    image: pihole-exporter:latest
     container_name: pihole-exporter
     volumes:
       - /proc:/host/proc:ro
@@ -118,10 +121,8 @@ services:
       - /var/lib/docker:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     restart: unless-stopped
-    ports:
-      - '8888:8888'
     expose:
-      - 8080
+      - 8888
     networks:
       - monitor-net
     labels:
