@@ -168,6 +168,22 @@ services:
       org.label-schema.group: "monitoring"
     restart: always
 
+  rpi_exporter:
+    build:
+      context: ./rpi_exporter
+      dockerfile: Dockerfile
+    image: rpi_exporter:latest
+    container_name: rpi_exporter
+    environment:
+      - VIRTUAL_HOST=rpi_exporter.local
+    restart: unless-stopped
+      - 9243
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
+    restart: always
+
   # # This services probes things using HTTP, ICMP, TCP etc. Mainly used to do connectivity and service checks
   # blackbox_exporter:
   #   image: prom/blackbox-exporter:master
