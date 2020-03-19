@@ -26,12 +26,12 @@ Run containers with `docker-compose`
 docker-compose up -d
 ```
 
-## Prerequisites:
+## Prerequisites
 
 * Docker Engine >= 1.13
 * Docker Compose >= 1.11
 
-## Containers:
+## Containers
 
 - **Prometheus** (metrics database) `http://<host-ip>:9090`
 - **Prometheus-Pushgateway** (push acceptor for ephemeral and batch jobs) `http://<host-ip>:9091`
