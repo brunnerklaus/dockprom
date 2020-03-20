@@ -169,6 +169,7 @@ services:
     restart: always
 
   rpi_exporter:
+    # https://github.com/carlosedp/docker-arm_exporter
     image: carlosedp/arm_exporter
     container_name: rpi_exporter
     environment:
