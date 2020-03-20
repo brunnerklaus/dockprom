@@ -193,19 +193,6 @@ services:
       org.label-schema.group: "monitoring"
     restart: always
 
-  node-smartmon:
-    build:
-      context: ./node-smartmon
-      dockerfile: Dockerfile
-    container_name: node-smartmon
-    expose:
-      - 9167
-    networks:
-      - monitor-net
-    labels:
-      org.label-schema.group: "monitoring"
-    restart: always
-
   # # This services probes things using HTTP, ICMP, TCP etc. Mainly used to do connectivity and service checks
   # blackbox_exporter:
   #   image: prom/blackbox-exporter:master
