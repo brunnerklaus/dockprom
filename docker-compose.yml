@@ -170,6 +170,7 @@ services:
 
   rpi_exporter:
     image: carlosedp/arm_exporter
+    container_name: rpi_exporter
     environment:
       - NODE_ID=raspberry
     volumes:
