@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.0.1
     container_name: node-exporter
     volumes:
       - /proc:/host/proc:ro
@@ -26,7 +26,7 @@ services:
     restart: always
 
   cadvisor:
-    image: google/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor:v0.37.0
     container_name: cadvisor
     environment:
       - VIRTUAL_HOST=cadvisor.local
