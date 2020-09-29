@@ -1,7 +1,7 @@
 # image for builder
 FROM golang:alpine as builder
 
-ENV PIHOLE_EXPORTER_VERSION "0.0.8"
+ENV PIHOLE_EXPORTER_VERSION "0.0.9"
 
 RUN apk update && \
     apk --no-cache add git alpine-sdk upx
