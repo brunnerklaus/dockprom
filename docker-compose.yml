@@ -10,7 +10,7 @@ volumes:
 
 services:
   prometheus:
-    image: prom/prometheus:v2.21.0
+    image: prom/prometheus:v2.22.0
     container_name: prometheus
     environment:
       - VIRTUAL_HOST=prometheus.local
@@ -124,7 +124,7 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana:7.1.5
+    image: grafana/grafana:7.3.1
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
